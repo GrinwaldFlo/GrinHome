@@ -1,0 +1,64 @@
+{
+  "end_device_ids": {
+    "device_id": "frigo",
+    "application_ids": { "application_id": "grintemp" },
+    "dev_eui": "A8404158A1827C5B",
+    "join_eui": "9A963C87AED3DD7F",
+    "dev_addr": "260B6D7B"
+  },
+  "correlation_ids": [ "as:up:01FR2PVWKQJG6AB8HTW8AJY9J7", "gs:conn:01FQCAJJ593EXX5ZAMNZ12HJEH", "gs:up:host:01FQCAJJ84NKBBT5XYZD5H7DFE", "gs:uplink:01FR2PVWD141VH5GJTYFC2FFQ7", "ns:uplink:01FR2PVWD29N05ZACH7F16VA2E", "rpc:/ttn.lorawan.v3.GsNs/HandleUplink:01FR2PVWD2X5SSFYRHWF2BP29T", "rpc:/ttn.lorawan.v3.NsAs/HandleUplink:01FR2PVWKPJZWDV52ZNPG3MRBX" ],
+  "received_at": "2021-12-29T09:03:18.647899097Z",
+  "uplink_message": {
+    "session_key_id": "AX37akPGlFuYYXx+cMxNeQ==",
+    "f_port": 2,
+    "f_cnt": 140,
+    "frm_payload": "y6QD9wKfAX//f/8=",
+    "decoded_payload": {
+      "BatV": 2.98,
+      "Ext_sensor": "Temperature Sensor",
+      "Hum_SHT": "67.1",
+      "TempC_DS": "327.67",
+      "TempC_SHT": "10.15"
+    },
+    "rx_metadata": [
+      {
+        "gateway_ids": {
+          "gateway_id": "eui-a840411e9c0c4150",
+          "eui": "A840411E9C0C4150"
+        },
+        "time": "2021-12-29T09:03:18.414236Z",
+        "timestamp": 1169583252,
+        "rssi": -73,
+        "channel_rssi": -73,
+        "snr": 7.2,
+        "location": {
+          "latitude": 46.53644360539977,
+          "longitude": 6.588846445083619,
+          "altitude": 300,
+          "source": "SOURCE_REGISTRY"
+        },
+        "uplink_token": "CiIKIAoUZXVpLWE4NDA0MTFlOWMwYzQxNTASCKhAQR6cDEFQEJTZ2a0EGgwI1siwjgYQ9q64zgEgoMTghIWVqwEqDAjWyLCOBhDg+sLFAQ==",
+        "channel_index": 5
+      }
+    ],
+    "settings": {
+      "data_rate": {
+        "lora": {
+          "bandwidth": 125000,
+          "spreading_factor": 7
+        }
+      },
+      "coding_rate": "4/5",
+      "frequency": "867500000",
+      "timestamp": 1169583252,
+      "time": "2021-12-29T09:03:18.414236Z"
+    },
+    "received_at": "2021-12-29T09:03:18.434811778Z",
+    "consumed_airtime": "0.061696s",
+    "network_ids": {
+      "net_id": "000013",
+      "tenant_id": "ttn",
+      "cluster_id": "ttn-eu1"
+    }
+  }
+}

@@ -1,0 +1,48 @@
+﻿@using GrinHome.Data.Models
+
+@if (float.IsNaN(Value))
+    return;
+
+<div class="card">
+    <div class="card-header">
+        @Name
+    </div>
+    <div class="card-body">
+        <RadzenArcGauge Style="width: 250px; height: 250px;">
+            <RadzenArcGaugeScale Step=@Step Min=@Min Max=@Max MinorStep="2" Radius="0.8" TickPosition=@GaugeTickPosition.Outside Y="0.7" Margin="0"
+            FormatString="{0:N1}">
+                <RadzenArcGaugeScaleValue Value=Value ShowValue=@true>
+                    <Template Context="pointer">
+                        <h4>
+                            @pointer.Value.ToString("0.#") <sup>@Unit</sup>
+                        </h4>
+                    </Template>
+                </RadzenArcGaugeScaleValue>
+            </RadzenArcGaugeScale>
+        </RadzenArcGauge>
+    </div>
+</div>
+
+@code {
+    [Parameter] public float Value { get; set; } = float.NaN;
+    [Parameter] public float Min { get; set; } = 0;
+    [Parameter] public float Max { get; set; } = 100;
+    [Parameter] public string Name { get; set; } = "";
+    [Parameter] public string Unit { get; set; } = "";
+    [Parameter]
+    public ValueShown ValueShown
+    {
+        set
+        {
+            Value = value.GetValue();
+            Name = value.ValueDefinition.Name;
+            Unit = value.ValueDefinition.DataType.Unit;
+            Min = value.ValueDefinition.Min;
+            Max = value.ValueDefinition.Max;
+            Step = (float)Math.Round(((Max - Min) / 5.0), 1);
+        }
+    }
+
+    public float Step { get; set; }
+
+}

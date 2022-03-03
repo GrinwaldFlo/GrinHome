@@ -1,0 +1,64 @@
+﻿@using GrinHome.Data
+@using GrinHome.Data.Models
+
+
+
+
+
+<div class="card" style="width:450px">
+    <div class="card-header">
+        @Name [@Unit]
+    </div>
+    <div class="card-body p-2">
+        <RadzenChart>
+            <RadzenLineSeries Smooth=false Data="@Value" CategoryProperty="Date" Title="@Name" LineType="LineType.Solid" ValueProperty="Value">
+                <RadzenMarkers MarkerType="MarkerType.None" />
+            </RadzenLineSeries>
+            <RadzenCategoryAxis Padding="20" FormatString=@AxisXFormat />
+            <RadzenValueAxis FormatString="{0:N1}">
+                <RadzenGridLines Visible="true" />
+                <RadzenAxisTitle Text="" />
+            </RadzenValueAxis>
+            <RadzenLegend Visible="false" />
+        </RadzenChart>
+    </div>
+</div>
+
+
+
+@code {
+    [Parameter] public SensorValue[] Value { get; set; } = Array.Empty<SensorValue>();
+    [Parameter] public float Min { get; set; } = 0;
+    [Parameter] public float Max { get; set; } = 100;
+    [Parameter] public float LimitMin { get; set; } = 0;
+    [Parameter] public float LimitMax { get; set; } = 100;
+    [Parameter] public string Name { get; set; } = "";
+    [Parameter] public string Unit { get; set; } = "";
+    [Parameter]
+    public DataGraph ValueShown
+    {
+        set
+        {
+            Value = value.Data.ToArray();
+            if (value.ValueDefinition != null)
+            {
+                Name = value.ValueDefinition.Name;
+                Unit = value.ValueDefinition.DataType.Unit;
+                Min = value.ValueDefinition.Min;
+                Max = value.ValueDefinition.Max;
+                LimitMin = value.ValueDefinition.LimitMin;
+                LimitMax = value.ValueDefinition.LimitMax;
+            }
+            double hours = Value.Any() ? (Value.Last().Date - Value.First().Date).TotalHours : 24;
+
+            if (hours < 24)
+                AxisXFormat = "{0:HH:mm}";
+            else
+                AxisXFormat = "{0:dd MMM HH:mm}";
+        }
+    }
+
+    private string AxisXFormat = "{0:HH:mm}";
+
+
+}

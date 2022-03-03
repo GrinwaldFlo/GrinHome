@@ -1,0 +1,24 @@
+﻿@page "/"
+
+<PageTitle>Grin Home</PageTitle>
+
+@if (ValueShowns != null && ValueShowns.Any())
+{
+    <div class="d-flex flex-wrap">
+        @foreach (var item in ValueShowns)
+        {
+            <GrinLinearGauge ValueShown=item />
+        }
+    </div>
+}
+
+ <RadzenButton Click=@(args => SendEvent()) Text="Default" />
+
+<div>Test: @testValue</div>
+
+<AuthorizeView Roles="User">
+     <p>You can only see this if you satisfy the IsUser policy.</p>
+ </AuthorizeView>  
+ <AuthorizeView Roles="Admin">
+     <p>You can only see this if you satisfy the IsAdmin policy.</p>
+ </AuthorizeView> 

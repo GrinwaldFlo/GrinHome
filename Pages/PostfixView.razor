@@ -1,0 +1,116 @@
+﻿@page "/postfixView"
+
+<PageTitle>GrinHome - Postifx</PageTitle>
+
+@if (!DataReceived.Any())
+{
+    <div class="alert alert-warning">
+        No data to show
+    </div>
+    return;
+}
+
+<div>
+    <RadzenButton Text="1 week" Click="() => SetTimeSpanDays(7)" />
+    <RadzenButton Text="2 weeks" Click="() => SetTimeSpanDays(14)" />
+    <RadzenButton Text="1 month" Click="() => SetTimeSpanDays(31)" />
+    <RadzenButton Text="All" Click="() => SetTimeSpanDays(20000)" />
+</div>
+
+
+
+<div class="d-flex flex-wrap">
+    <div class="card" style="width:100%">
+        <div class="card-header">
+            Mail counts
+        </div>
+        <div class="card-body p-2">
+            <RadzenChart>
+                <RadzenLineSeries Smooth=false Data="@DataReceived" CategoryProperty="Date" Title="Received" LineType="LineType.Solid" ValueProperty="Value">
+                    <RadzenMarkers MarkerType="MarkerType.None" />
+                </RadzenLineSeries>
+                <RadzenLineSeries Smooth=false Data="@DataDelivered" CategoryProperty="Date" Title="Delivered" LineType="LineType.Solid" ValueProperty="Value">
+                    <RadzenMarkers MarkerType="MarkerType.None" />
+                </RadzenLineSeries>
+                <RadzenLineSeries Smooth=false Data="@DataForwarded" CategoryProperty="Date" Title="Forwarded" LineType="LineType.Solid" ValueProperty="Value">
+                    <RadzenMarkers MarkerType="MarkerType.None" />
+                </RadzenLineSeries>
+                <RadzenLineSeries Smooth=false Data="@DataDeferred" CategoryProperty="Date" Title="Deferred" LineType="LineType.Solid" ValueProperty="Value">
+                    <RadzenMarkers MarkerType="MarkerType.None" />
+                </RadzenLineSeries>
+                <RadzenLineSeries Smooth=false Data="@DataBounced" CategoryProperty="Date" Title="Bounced" LineType="LineType.Solid" ValueProperty="Value">
+                    <RadzenMarkers MarkerType="MarkerType.None" />
+                </RadzenLineSeries>
+                <RadzenLineSeries Smooth=false Data="@DataRejected" CategoryProperty="Date" Title="Rejected" LineType="LineType.Solid" ValueProperty="Value">
+                    <RadzenMarkers MarkerType="MarkerType.None" />
+                </RadzenLineSeries>
+                <RadzenLineSeries Smooth=false Data="@DataRejectedWarning" CategoryProperty="Date" Title="RejectedWarning" LineType="LineType.Solid" ValueProperty="Value">
+                    <RadzenMarkers MarkerType="MarkerType.None" />
+                </RadzenLineSeries>
+                <RadzenLineSeries Smooth=false Data="@DataSmtpdWarnings" CategoryProperty="Date" Title="SMTP Warnings" LineType="LineType.Solid" ValueProperty="Value">
+                    <RadzenMarkers MarkerType="MarkerType.None" />
+                </RadzenLineSeries>
+                <RadzenCategoryAxis Padding="20" FormatString="{0:dd MMM}" />
+                <RadzenValueAxis FormatString="{0:N1}">
+                    <RadzenGridLines Visible="true" />
+                    <RadzenAxisTitle Text="" />
+                </RadzenValueAxis>
+                <RadzenLegend Visible="true" />
+            </RadzenChart>
+        </div>
+    </div>
+    <div class="card" style="width:100%">
+        <div class="card-header">
+            Mail data [MB]
+        </div>
+        <div class="card-body p-2">
+            <RadzenChart>
+                <RadzenLineSeries Smooth=false Data="@DataBytesReceived" CategoryProperty="Date" Title="Received" LineType="LineType.Solid" ValueProperty="Value">
+                    <RadzenMarkers MarkerType="MarkerType.None" />
+                </RadzenLineSeries>
+                <RadzenLineSeries Smooth=false Data="@DataBytesDelivered" CategoryProperty="Date" Title="Delivered" LineType="LineType.Solid" ValueProperty="Value">
+                    <RadzenMarkers MarkerType="MarkerType.None" />
+                </RadzenLineSeries>
+                <RadzenCategoryAxis Padding="20" FormatString="{0:dd MMM}" />
+                <RadzenValueAxis FormatString="{0:N1}">
+                    <RadzenGridLines Visible="true" />
+                    <RadzenAxisTitle Text="" />
+                </RadzenValueAxis>
+                <RadzenLegend Visible="true" />
+            </RadzenChart>
+        </div>
+    </div>
+    <div class="card" style="width:100%">
+        <div class="card-header">
+            Mail counts
+        </div>
+        <div class="card-body p-2">
+            <RadzenChart>
+                <RadzenLineSeries Smooth=false Data="@DataHeld" CategoryProperty="Date" Title="Held" LineType="LineType.Solid" ValueProperty="Value">
+                    <RadzenMarkers MarkerType="MarkerType.None" />
+                </RadzenLineSeries>
+                <RadzenLineSeries Smooth=false Data="@DataDiscarded" CategoryProperty="Date" Title="Discarded" LineType="LineType.Solid" ValueProperty="Value">
+                    <RadzenMarkers MarkerType="MarkerType.None" />
+                </RadzenLineSeries>
+                <RadzenLineSeries Smooth=false Data="@DataSenders" CategoryProperty="Date" Title="Senders" LineType="LineType.Solid" ValueProperty="Value">
+                    <RadzenMarkers MarkerType="MarkerType.None" />
+                </RadzenLineSeries>
+                <RadzenLineSeries Smooth=false Data="@DataSendingHostDomain" CategoryProperty="Date" Title="Sending Host Domain" LineType="LineType.Solid" ValueProperty="Value">
+                    <RadzenMarkers MarkerType="MarkerType.None" />
+                </RadzenLineSeries>
+                <RadzenLineSeries Smooth=false Data="@DataRecipients" CategoryProperty="Date" Title="Recipients" LineType="LineType.Solid" ValueProperty="Value">
+                    <RadzenMarkers MarkerType="MarkerType.None" />
+                </RadzenLineSeries>
+                <RadzenLineSeries Smooth=false Data="@DataRecipientHostDomain" CategoryProperty="Date" Title="Recipient Host Domain" LineType="LineType.Solid" ValueProperty="Value">
+                    <RadzenMarkers MarkerType="MarkerType.None" />
+                </RadzenLineSeries>
+                <RadzenCategoryAxis Padding="20" FormatString="{0:dd MMM}" />
+                <RadzenValueAxis FormatString="{0:N1}">
+                    <RadzenGridLines Visible="true" />
+                    <RadzenAxisTitle Text="" />
+                </RadzenValueAxis>
+                <RadzenLegend Visible="true" />
+            </RadzenChart>
+        </div>
+    </div>
+</div>

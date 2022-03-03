@@ -1,0 +1,65 @@
+﻿@using GrinHome.Data.Models
+
+@if (float.IsNaN(Value))
+    return;
+
+
+
+<div class="card" style="width:350px">
+    <div class="card-body p-2">
+        <div class="row p-0 m-0">
+            <div class="col-7 text-wrap p-0 m-0">
+                @Name | @Value <span class="small text-black-50">@Unit</span>
+            </div>
+            <div class="col-5 border p-0 m-0 h-100 rounded">
+                <div class="@bgColor p-0 m-0 rounded" style="width:@WidthPerc%;height:20px">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@code {
+    [Parameter] public float Value { get; set; } = float.NaN;
+    [Parameter] public float Min { get; set; } = 0;
+    [Parameter] public float Max { get; set; } = 100;
+    [Parameter] public float LimitMin { get; set; } = 0;
+    [Parameter] public float LimitMax { get; set; } = 100;
+    [Parameter] public string Name { get; set; } = "";
+    [Parameter] public string Unit { get; set; } = "";
+    [Parameter]
+    public ValueShown ValueShown
+    {
+        set
+        {
+            Value = value.GetValue();
+            Name = value.ValueDefinition.Name;
+            Unit = value.ValueDefinition.DataType.Unit;
+            Min = value.ValueDefinition.Min;
+            Max = value.ValueDefinition.Max;
+            LimitMin = value.ValueDefinition.LimitMin;
+            LimitMax = value.ValueDefinition.LimitMax;
+        }
+    }
+
+    private int WidthPerc
+    {
+        get
+        {
+            return (int)((Value - Min) / (Max - Min) * 100.0f);
+        }
+    }
+
+    private string bgColor
+    {
+        get
+        {
+            if (Value < LimitMin || Value > LimitMax)
+                return "bg-danger";
+            return "bg-success";
+        }
+    }
+
+}
