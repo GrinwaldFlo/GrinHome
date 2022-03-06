@@ -1,8 +1,8 @@
 ﻿@page "/admin/sensors"
-@attribute [Authorize(Roles = "Admin")]
 @using GrinHome.Data.Models
 @using System.ComponentModel.DataAnnotations
 @inherits GrinTableEditor<Sensor>
+@attribute [Authorize(Roles = @GrinHome.Data.DbTool.Admin)]
 
 
 

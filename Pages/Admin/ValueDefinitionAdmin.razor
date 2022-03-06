@@ -1,5 +1,5 @@
 ﻿@page "/admin/valueDefinition"
-@attribute [Authorize(Roles = "Admin")]
+@attribute [Authorize(Roles = @GrinHome.Data.DbTool.Admin)]
 @using GrinHome.Data.Models
 @using System.ComponentModel.DataAnnotations
 @inherits GrinTableEditor<ValueDefinition>
@@ -12,12 +12,12 @@
         <RadzenDataGridColumn TItem="ValueDefinition" Property="ID" Title="ID" Width="120px" />
         <RadzenDataGridColumn TItem="ValueDefinition" Property="Sensor.Name" Title="Sensor">
             <EditTemplate Context="item">
-                <RadzenDropDown @bind-Value="item.Sensor.ID" Data="@sensors" TextProperty="Name" ValueProperty="ID" Style="width:100%; display: block;" />
+                <RadzenDropDown @bind-Value="item.SensorID" Data="@sensors" TextProperty="Name" ValueProperty="ID" Style="width:100%; display: block;" />
             </EditTemplate>
         </RadzenDataGridColumn>
         <RadzenDataGridColumn TItem="ValueDefinition" Property="DataType.Name" Title="Type">
             <EditTemplate Context="item">
-                <RadzenDropDown @bind-Value="item.d" Data="@dataTypes" TextProperty="Name" ValueProperty="ID" Style="width:100%; display: block;" />
+                <RadzenDropDown @bind-Value="item.DataTypeID" Data="@dataTypes" TextProperty="Name" ValueProperty="ID" Style="width:100%; display: block;" />
             </EditTemplate>
         </RadzenDataGridColumn>
         <RadzenDataGridColumn TItem="ValueDefinition" Property="Name" Title="Name">

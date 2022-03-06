@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using GrinHome.Data
 
 <PageTitle>Grin Home</PageTitle>
 
@@ -16,9 +17,9 @@
 
 <div>Test: @testValue</div>
 
-<AuthorizeView Roles="User">
+<AuthorizeView Roles=@DbTool.User>
      <p>You can only see this if you satisfy the IsUser policy.</p>
  </AuthorizeView>  
- <AuthorizeView Roles="Admin">
+ <AuthorizeView Roles=@DbTool.Admin>
      <p>You can only see this if you satisfy the IsAdmin policy.</p>
  </AuthorizeView> 

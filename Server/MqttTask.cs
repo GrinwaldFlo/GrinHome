@@ -1,6 +1,7 @@
 ﻿using GrinHome.Data;
 using GrinHome.Data.Models;
 using GrinHome.Data.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MQTTnet;
 using MQTTnet.Client.Connecting;
@@ -18,6 +19,7 @@ namespace GrinHome.Server
     public class MqttTask : BackgroundService
     {
         private readonly DataService dataService;
+        private readonly IConfiguration configuration;
         private int MqttClientId;
         private IList<Sensor> sensorsMQTT = new List<Sensor>();
 
@@ -25,11 +27,11 @@ namespace GrinHome.Server
 
         private ValueShown[] CacheSensorsLiveHome = Array.Empty<ValueShown>();
 
-        public MqttTask(IServiceProvider serviceProvider, DataService dataService)
+        public MqttTask(IServiceProvider serviceProvider, DataService dataService, IConfiguration configuration)
         {
             ServiceProvider = serviceProvider;
             this.dataService = dataService;
-
+            this.configuration = configuration;
             dataService.TestCtoS.Subscribe(x => NewEvent());
         }
 
@@ -57,7 +59,7 @@ namespace GrinHome.Server
             if (db == null)
                 return;
 
-            db.Database.Migrate();
+            DbTool.CheckDb(db, configuration["AdminEmail"]);
             await PopulateInitialData();
             await ImportData();
             await Task.Delay(1, stoppingToken);
@@ -78,6 +80,8 @@ namespace GrinHome.Server
                 await Task.Delay(1000, stoppingToken);
             }
         }
+
+    
 
         private static void OnSubscriberConnected(MqttClientConnectedEventArgs x)
         {
