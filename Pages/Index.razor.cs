@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components;
 using Serilog;
 using System.Reactive.Linq;
 
-namespace GrinHome.Pages.Home
+namespace GrinHome.Pages
 {
     public partial class Index : ComponentBase, IDisposable 
     {

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace GrinHome.Pages.Home
 {
-    public partial class Graph : ComponentBase
+    public partial class GraphHome : ComponentBase
     {
 
         [Parameter] public string? DataPage { get; set; }

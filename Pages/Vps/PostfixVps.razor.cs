@@ -3,9 +3,9 @@ using GrinHome.Data.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 
-namespace GrinHome.Pages.Home
+namespace GrinHome.Pages.Vps
 {
-    public partial class PostfixView : ComponentBase
+    public partial class PostfixVps : ComponentBase
     {
         [Inject] DataService? DataService { get; set; }
 

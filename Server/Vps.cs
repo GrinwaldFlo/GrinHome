@@ -13,7 +13,7 @@ namespace GrinHome.Server
     {
         private IServiceProvider ServiceProvider { get; }
         private readonly DataService dataService;
-        private string path;
+        private readonly string path;
 
         //public ApplicationDbContext? Db
         //{
@@ -142,7 +142,7 @@ namespace GrinHome.Server
             }
         }
 
-        private int FindIntValue(string label, string raw)
+        private static int FindIntValue(string label, string raw)
         {
             var reg = Regex.Match(raw, $@"\s+(\d+)\s+{label}");
             if (reg.Success)
@@ -155,7 +155,7 @@ namespace GrinHome.Server
             return -1;
         }
 
-        private int RegexIntValue(string regex, string raw)
+        private static int RegexIntValue(string regex, string raw)
         {
             var reg = Regex.Match(raw, regex);
             if (reg.Success)
@@ -163,7 +163,7 @@ namespace GrinHome.Server
             return -1;
         }
 
-        private Dictionary<string, string> SplitBySection(string data)
+        private static Dictionary<string, string> SplitBySection(string data)
         {
             string[] datas = data.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
             Dictionary<string, string> result = new();
