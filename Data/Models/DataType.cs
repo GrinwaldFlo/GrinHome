@@ -8,18 +8,14 @@ namespace GrinHome.Data.Models
 
         [Required]
         [StringLength(20)]
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
         [Required]
         [StringLength(5)]
-        public string Unit { get; set; }
+        public string Unit { get; set; } = null!;
 
         [Required]
         [StringLength(100)]
-        public string JsonPath { get; set; }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-
-
+        public string JsonPath { get; set; } = null!;
     }
 }

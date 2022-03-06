@@ -7,13 +7,11 @@ namespace GrinHome.Data.Models
         public ushort ID { get; set; }
         [Required]
         [StringLength(20)]
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-        public string Page { get; set; }
+        public string Page { get; set; } = null!;
 
         public ushort Order { get; set; }
 
-        public ValueDefinition ValueDefinition { get; set; }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        public ValueDefinition ValueDefinition { get; set; } = null!;
 
         /// <summary>
         /// Return NaN if no values

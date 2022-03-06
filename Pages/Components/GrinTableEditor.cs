@@ -2,12 +2,14 @@
 using GrinHome.Data.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using Radzen;
 using Radzen.Blazor;
 
 namespace GrinHome.Pages.Components
 {
     public abstract class GrinTableEditor<T> : ComponentBase where T : class, new()
     {
+        [Inject] DialogService DialogService { get; set; } = null!;
         protected ApplicationDbContext db = null!;
         protected IEnumerable<T> items = Enumerable.Empty<T>();
         protected RadzenDataGrid<T> itemsGrid = null!;
@@ -34,6 +36,11 @@ namespace GrinHome.Pages.Components
 
         protected async Task DeleteRow(T item)
         {
+            bool? dlgResult = await DialogService.Confirm("Are you sure you want to delete this item ?", $"Delete {item}", new ConfirmOptions() { OkButtonText = "Yes", CancelButtonText = "No" });
+
+            if (!dlgResult.HasValue || !dlgResult.Value)
+                return;
+
             if (item == itemToInsert)
             {
                 itemToInsert = null;

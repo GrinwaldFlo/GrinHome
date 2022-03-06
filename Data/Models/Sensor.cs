@@ -16,5 +16,10 @@ namespace GrinHome.Data.Models
         public CommType CommType { get; set; }
 
         public virtual IList<ValueDefinition> ValueDefinitions { get; set; } = new List<ValueDefinition>();
+
+        public override string ToString()
+        {
+            return $"{ID} - {Name}/{DeviceName} ({CommType})";
+        }
     }
 }

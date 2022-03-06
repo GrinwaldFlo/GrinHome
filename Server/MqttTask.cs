@@ -339,6 +339,9 @@ namespace GrinHome.Server
                 Log.Information($"MQTT Device not found {deviceID}");
                 return;
             }
+            var db = Db;
+            if (db == null)
+                return;
 
             foreach (var item in sensor.ValueDefinitions)
             {
@@ -347,12 +350,14 @@ namespace GrinHome.Server
                     var value = (float?)data.SelectToken(item.DataType.JsonPath);
                     if (value != null)
                     {
-                        await new SensorValue()
+                        await db.AddAsync(new SensorValue()
                         {
                             ValueDefinitionID = item.ID,
                             Value = (float)value,
                             Date = DateTime.Now
-                        }.AddAsync(Db);
+                        });
+                        await db.SaveChangesAsync();
+                     
 
                         var cacheValue = CacheSensorsLiveHome.Where(x => x.ValueDefinition.ID == item.ID).FirstOrDefault();
                         if (cacheValue != null)
