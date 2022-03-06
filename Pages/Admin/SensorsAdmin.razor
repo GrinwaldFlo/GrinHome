@@ -1,0 +1,58 @@
+﻿@page "/admin/sensors"
+@attribute [Authorize(Roles = "Admin")]
+@using GrinHome.Data.Models
+@using System.ComponentModel.DataAnnotations
+@inherits GrinTableEditor<Sensor>
+
+
+
+<RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Add New Sensor" Click="@InsertRow" Disabled=@(itemToInsert != null) />
+<RadzenDataGrid @ref="itemsGrid" AllowFiltering="true" AllowPaging="true" PageSize="5" AllowSorting="true" EditMode="DataGridEditMode.Single"
+                Data="@items" TItem="Sensor" RowUpdate="@OnUpdateRow" RowCreate="@OnCreateRow">
+    <Columns>
+        <RadzenDataGridColumn TItem="Sensor" Property="ID" Title="ID" Width="120px" />
+        <RadzenDataGridColumn TItem="Sensor" Property="Name" Title="Name">
+            <EditTemplate Context="sensor">
+                <RadzenTextBox @bind-Value="sensor.Name" Style="width:100%; display: block" Name="Name" />
+                <RadzenRequiredValidator Text="Name is required" Component="Name" Popup="true" />
+            </EditTemplate>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="Sensor" Property="DeviceName" Title="Device name">
+            <EditTemplate Context="sensor">
+                <RadzenTextBox @bind-Value="sensor.DeviceName" Style="width:100%; display: block" Name="DeviceName" />
+                <RadzenRequiredValidator Text="Device  name is required" Component="DeviceName" Popup="true" />
+            </EditTemplate>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="Sensor" Property="CommType" Title="Communication" Width="280px">
+            <EditTemplate Context="sensor">
+                <RadzenDropDown @bind-Value="sensor.CommType" Data="@comeTypes" Style="width:100%; display: block;" />
+            </EditTemplate>
+        </RadzenDataGridColumn>
+        
+
+        <RadzenDataGridColumn TItem="Sensor"  Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
+            <Template Context="sensor">
+                <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@(args => EditRow(sensor))" @onclick:stopPropagation="true">
+                </RadzenButton>
+            </Template>
+            <EditTemplate Context="sensor">
+                <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Primary" Class="m-1" Click="@((args) => SaveRow(sensor))">
+                </RadzenButton>
+                <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@((args) => CancelEdit(sensor))">
+                </RadzenButton>
+            </EditTemplate>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="Sensor" Context="sensor" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="60px">
+            <Template Context="sensor">
+                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Small" Class="m-1" Click="@(args => DeleteRow(sensor))" @onclick:stopPropagation="true">
+                </RadzenButton>
+            </Template>
+            <EditTemplate Context="sensor">
+                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Small" Class="m-1" Click="@(args => DeleteRow(sensor))">
+                </RadzenButton>
+            </EditTemplate>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>
+
+

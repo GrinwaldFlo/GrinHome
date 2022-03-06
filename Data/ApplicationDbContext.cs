@@ -7,7 +7,6 @@ namespace GrinHome.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -21,14 +20,14 @@ namespace GrinHome.Data
             builder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "Admin", NormalizedName = "ADMIN", Id = Guid.NewGuid().ToString(), ConcurrencyStamp = Guid.NewGuid().ToString() });
         }
 
-        public DbSet<Sensor> Sensors { get; set; }
-        public DbSet<SensorValue> SensorValues { get; set; }
-        public DbSet<DataType> DataTypes { get; set; }
-        public DbSet<ServerConnexion> ServerConnexions { get; set;}
-        public DbSet<ValueDefinition> ValueDefinitions { get; set; }
-        public DbSet<ValueShown> ValuesShown { get; set; }
-        public DbSet<Postfix> Postfixes { get; set; }
+        public DbSet<Sensor> Sensors { get; set; } = null!;
+        public DbSet<SensorValue> SensorValues { get; set; } = null!;
+        public DbSet<DataType> DataTypes { get; set; } = null!;
+        public DbSet<ServerConnexion> ServerConnexions { get; set; } = null!;
+        public DbSet<ValueDefinition> ValueDefinitions { get; set; } = null!;
+        public DbSet<ValueShown> ValuesShown { get; set; } = null!;
+        public DbSet<Postfix> Postfixes { get; set; } = null!;
 
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+
     }
 }
