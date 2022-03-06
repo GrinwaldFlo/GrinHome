@@ -9,6 +9,7 @@ namespace GrinHome.Data.Models
         [StringLength(20)]
         public string Name { get; set; } = null!;
 
+
         public Sensor Sensor { get; set; } = null!;
         public DataType DataType { get; set; } = null!;
 

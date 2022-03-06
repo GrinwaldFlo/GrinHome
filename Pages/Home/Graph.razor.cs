@@ -2,7 +2,7 @@
 using GrinHome.Data.Services;
 using Microsoft.AspNetCore.Components;
 
-namespace GrinHome.Pages
+namespace GrinHome.Pages.Home
 {
     public partial class Graph : ComponentBase
     {

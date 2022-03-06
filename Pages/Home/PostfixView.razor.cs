@@ -3,7 +3,7 @@ using GrinHome.Data.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 
-namespace GrinHome.Pages
+namespace GrinHome.Pages.Home
 {
     public partial class PostfixView : ComponentBase
     {

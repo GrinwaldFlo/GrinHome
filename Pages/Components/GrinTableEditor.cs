@@ -92,6 +92,7 @@ namespace GrinHome.Pages.Components
             db = newDb;
             LoadData();
         }
+
         protected void OnUpdateRow(T item)
         {
             if (item == itemToInsert)
