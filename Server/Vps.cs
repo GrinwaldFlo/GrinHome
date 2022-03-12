@@ -2,6 +2,7 @@
 using GrinHome.Data.Models;
 using GrinHome.Data.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Serilog;
 using System.Globalization;
 using System.Text;
@@ -13,7 +14,9 @@ namespace GrinHome.Server
     {
         private IServiceProvider ServiceProvider { get; }
         private readonly DataService dataService;
+        private readonly EmailSender emailSender;
         private readonly string path;
+        private bool NotificationSent = false;
 
         //public ApplicationDbContext? Db
         //{
@@ -32,10 +35,11 @@ namespace GrinHome.Server
         //}
         private ApplicationDbContext? db;
 
-        public Vps(IServiceProvider serviceProvider, DataService dataService, IConfiguration configuration)
+        public Vps(IServiceProvider serviceProvider, DataService dataService, IConfiguration configuration, IOptions<SmtpSenderOptions> smtpOptions)
         {
             ServiceProvider = serviceProvider;
             this.dataService = dataService;
+            emailSender = new EmailSender(smtpOptions, serviceProvider);
             path = configuration["MailLog"];
             if (!Directory.Exists(path))
                 Log.Error($"VPS: path {path} doesn't existst");
@@ -130,16 +134,36 @@ namespace GrinHome.Server
                     postfix.SmtpdWarnings = RegexIntValue(@"\ssmtpd \(total:\s(\d+)\)", warnings);
                 }
 
-                if(postfix.Id == 0)
+                if (postfix.Id == 0)
                     db.Postfixes.Add(postfix);
 
                 db.SaveChanges();
                 file.Delete();
+
+                CheckAlert(postfix);
             }
             catch (Exception ex)
             {
                 Log.Error(ex, "VPS Mail log");
             }
+        }
+
+        private void CheckAlert(Postfix postfix)
+        {
+            if (postfix.SmtpdWarnings > 500 && db != null)
+            {
+                if (!NotificationSent)
+                {
+                    var users = DbTool.GetUsersFromRole(db, DbTool.Admin);
+                    foreach (var user in users)
+                    {
+                        emailSender.SendEmailAsync(user.Email, "SMTP Warning", $"SMTP Warnings exceeds limit ({postfix.SmtpdWarnings})");
+                    }
+                }
+                NotificationSent = true;
+            }
+            else
+                NotificationSent = false;
         }
 
         private static int FindIntValue(string label, string raw)

@@ -39,5 +39,15 @@ namespace GrinHome.Data
                 );
             db.SaveChanges();
         }
+
+        public static List<IdentityUser> GetUsersFromRole(ApplicationDbContext db, string role)
+        {
+            var roleDb = db.Roles.FirstOrDefault(x => x.NormalizedName == role.ToUpper());
+            if (roleDb == null)
+                return new List<IdentityUser>();
+            var userRoles = db.UserRoles.Where(x => x.RoleId == roleDb.Id).Select(x => x.UserId).ToList();
+
+            return db.Users.Where(x => userRoles.Contains(x.Id)).ToList();
+        }
     }
 }

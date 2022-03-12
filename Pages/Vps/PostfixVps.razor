@@ -2,13 +2,6 @@
 
 <PageTitle>GrinHome - Postifx</PageTitle>
 
-@if (!DataReceived.Any())
-{
-    <div class="alert alert-warning">
-        No data to show
-    </div>
-    return;
-}
 
 <div>
     <RadzenButton Text="1 week" Click="() => SetTimeSpanDays(7)" />
@@ -17,7 +10,13 @@
     <RadzenButton Text="All" Click="() => SetTimeSpanDays(20000)" />
 </div>
 
-
+@if (!DataReceived.Any())
+{
+    <div class="alert alert-warning">
+        No data to show
+    </div>
+    return;
+}
 
 <div class="d-flex flex-wrap">
     <div class="card" style="width:100%">
@@ -47,15 +46,13 @@
                 <RadzenLineSeries Smooth=false Data="@DataRejectedWarning" CategoryProperty="Date" Title="RejectedWarning" LineType="LineType.Solid" ValueProperty="Value">
                     <RadzenMarkers MarkerType="MarkerType.None" />
                 </RadzenLineSeries>
-                <RadzenLineSeries Smooth=false Data="@DataSmtpdWarnings" CategoryProperty="Date" Title="SMTP Warnings" LineType="LineType.Solid" ValueProperty="Value">
-                    <RadzenMarkers MarkerType="MarkerType.None" />
-                </RadzenLineSeries>
-                <RadzenCategoryAxis Padding="20" FormatString="{0:dd MMM}" />
-                <RadzenValueAxis FormatString="{0:N1}">
+                <RadzenCategoryAxis Padding="20" FormatString="{0:dd MMM}"  />
+                <RadzenValueAxis FormatString="{0:N1}" >
                     <RadzenGridLines Visible="true" />
                     <RadzenAxisTitle Text="" />
+
                 </RadzenValueAxis>
-                <RadzenLegend Visible="true" />
+                <RadzenLegend Visible="true" Position="LegendPosition.Bottom" />
             </RadzenChart>
         </div>
     </div>
@@ -76,7 +73,7 @@
                     <RadzenGridLines Visible="true" />
                     <RadzenAxisTitle Text="" />
                 </RadzenValueAxis>
-                <RadzenLegend Visible="true" />
+                <RadzenLegend Visible="true" Position="LegendPosition.Bottom" />
             </RadzenChart>
         </div>
     </div>
@@ -109,7 +106,25 @@
                     <RadzenGridLines Visible="true" />
                     <RadzenAxisTitle Text="" />
                 </RadzenValueAxis>
-                <RadzenLegend Visible="true" />
+                <RadzenLegend Visible="true" Position="LegendPosition.Bottom" />
+            </RadzenChart>
+        </div>
+    </div>
+     <div class="card" style="width:100%">
+        <div class="card-header">
+            Warnings
+        </div>
+        <div class="card-body p-2">
+            <RadzenChart>
+                <RadzenLineSeries Smooth=false Data="@DataSmtpdWarnings" CategoryProperty="Date" Title="SMTP Warnings" LineType="LineType.Solid" ValueProperty="Value">
+                    <RadzenMarkers MarkerType="MarkerType.None" />
+                </RadzenLineSeries>
+                <RadzenCategoryAxis Padding="20" FormatString="{0:dd MMM}"  />
+                <RadzenValueAxis FormatString="{0:N1}" >
+                    <RadzenGridLines Visible="true" />
+                    <RadzenAxisTitle Text="" />
+                </RadzenValueAxis>
+                <RadzenLegend Visible="true" Position="LegendPosition.Bottom" />
             </RadzenChart>
         </div>
     </div>
