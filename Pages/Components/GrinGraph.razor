@@ -14,6 +14,12 @@
             <RadzenLineSeries Smooth=false Data="@Value" CategoryProperty="Date" Title="@Name" LineType="LineType.Solid" ValueProperty="Value">
                 <RadzenMarkers MarkerType="MarkerType.None" />
             </RadzenLineSeries>
+            @if (ValueOld.Any())
+            {
+                <RadzenLineSeries Smooth=false Data="@ValueOld" CategoryProperty="Date" Title="@Name" LineType="LineType.Dashed" StrokeWidth="1" ValueProperty="Value" >
+                    <RadzenMarkers MarkerType="MarkerType.None" />
+                </RadzenLineSeries>
+            }
             <RadzenCategoryAxis Padding="20" FormatString=@AxisXFormat />
             <RadzenValueAxis FormatString="{0:N1}">
                 <RadzenGridLines Visible="true" />
@@ -28,6 +34,7 @@
 
 @code {
     [Parameter] public SensorValue[] Value { get; set; } = Array.Empty<SensorValue>();
+    [Parameter] public SensorValue[] ValueOld { get; set; } = Array.Empty<SensorValue>();
     [Parameter] public float Min { get; set; } = 0;
     [Parameter] public float Max { get; set; } = 100;
     [Parameter] public float LimitMin { get; set; } = 0;
@@ -40,6 +47,7 @@
         set
         {
             Value = value.Data.ToArray();
+            ValueOld = value.DataOld.ToArray();
             if (value.ValueDefinition != null)
             {
                 Name = value.ValueDefinition.Name;

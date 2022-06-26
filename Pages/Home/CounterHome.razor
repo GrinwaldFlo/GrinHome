@@ -1,0 +1,36 @@
+﻿@page "/home/counter"
+
+<PageTitle>GrinHome - Counters</PageTitle>
+
+@if (!counters.Any())
+{
+    <div class="alert alert-warning">
+        No data to show
+    </div>
+    return;
+}
+
+@*<div>
+    <RadzenButton Text="1 week" Click="() => SetTimeSpanHours(24*7)" />
+    <RadzenButton Text="3 weeks" Click="() => SetTimeSpanHours(24*7*3)" />
+    <RadzenButton Text="2 months" Click="() => SetTimeSpanHours(24*7*60)" />
+    <RadzenButton Text="1 year" Click="() => SetTimeSpanHours(24*7*366)" />
+</div>*@
+<div class="pt-1">
+    @foreach (var counter in counters)
+    {
+        <div class="card">
+            <h5 class="card-header">@counter.Name</h5>
+            <div class="card-body">
+                <AuthorizeView Roles="Admin">
+                    <RadzenNumeric TValue="int" Min="0" Max="100" @bind-Value=@counter.ValueToAdd Class="w-100" />
+                    <RadzenButton Text="Add" Click=@(args => AddValue(counter)) />
+                    <hr />
+                </AuthorizeView>
+                This year we had <b>@counter.GetSumValues()</b> @counter.Name
+
+            </div>
+        </div>
+    }
+</div>
+

@@ -11,6 +11,7 @@ namespace GrinHome.Data
     public class DataGraph
     {
         public IList<SensorValue> Data { get; set; } = new List<SensorValue>();
+        public IList<SensorValue> DataOld { get; set; } = new List<SensorValue>();
 
         public ValueDefinition? ValueDefinition { get; set; }
 

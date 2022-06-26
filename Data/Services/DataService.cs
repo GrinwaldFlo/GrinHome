@@ -50,13 +50,17 @@ namespace GrinHome.Data.Services
             foreach (var item in valuesShown)
             {
                 DateTime from = DateTime.Now - timeSpan;
+                DateTime oldFrom = from.AddYears(-1);
+                DateTime oldTo = from + timeSpan;
 
                 var values = await db.SensorValues.Where(x => x.Date > from && x.ValueDefinitionID == item.ValueDefinition.ID).OrderBy(x => x.Date).ToArrayAsync();
+                var oldValues = await db.SensorValues.Where(x => x.Date > oldFrom && x.Date < oldTo && x.ValueDefinitionID == item.ValueDefinition.ID).OrderBy(x => x.Date).ToArrayAsync();
 
                 result.Add(new DataGraph()
                 {
                     ValueDefinition = item.ValueDefinition,
-                    Data = values
+                    Data = values,
+                    DataOld = oldValues
                 });
             }
             return result.ToArray();
@@ -89,8 +93,8 @@ namespace GrinHome.Data.Services
                 .OrderBy(x => x.Order)
                 .AsSplitQuery().AsNoTracking().ToArrayAsync();
 
-         //   stopwatch.Stop();
-           // Log.Debug($"GetSensorsLive: {stopwatch.ElapsedMilliseconds} ms.");
+            //   stopwatch.Stop();
+            // Log.Debug($"GetSensorsLive: {stopwatch.ElapsedMilliseconds} ms.");
             return result;
         }
     }

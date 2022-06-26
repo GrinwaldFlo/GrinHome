@@ -19,7 +19,7 @@ namespace GrinHome.Data
         public DbSet<ValueDefinition> ValueDefinitions { get; set; } = null!;
         public DbSet<ValueShown> ValuesShown { get; set; } = null!;
         public DbSet<Postfix> Postfixes { get; set; } = null!;
-
-
+        public DbSet<CounterItem> CounterItems { get; set; } = null!;
+        public DbSet<CounterValue> CounterValues { get; set; } = null!;
     }
 }
