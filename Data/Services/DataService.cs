@@ -51,10 +51,13 @@ namespace GrinHome.Data.Services
             {
                 DateTime from = DateTime.Now - timeSpan;
                 DateTime oldFrom = from.AddYears(-1);
-                DateTime oldTo = from + timeSpan;
+                DateTime oldTo = oldFrom + timeSpan;
 
                 var values = await db.SensorValues.Where(x => x.Date > from && x.ValueDefinitionID == item.ValueDefinition.ID).OrderBy(x => x.Date).ToArrayAsync();
-                var oldValues = await db.SensorValues.Where(x => x.Date > oldFrom && x.Date < oldTo && x.ValueDefinitionID == item.ValueDefinition.ID).OrderBy(x => x.Date).ToArrayAsync();
+                var oldValues = await db.SensorValues.Where(x => x.Date > oldFrom && x.Date < oldTo && x.ValueDefinitionID == item.ValueDefinition.ID)
+                    .OrderBy(x => x.Date).ToListAsync();
+
+                oldValues.ForEach(x => x.Date = x.Date.AddYears(1));
 
                 result.Add(new DataGraph()
                 {

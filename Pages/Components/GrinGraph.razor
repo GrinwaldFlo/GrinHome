@@ -7,7 +7,7 @@
 
 <div class="card" style="width:100%">
     <div class="card-header">
-        @Name [@Unit]
+        @Title
     </div>
     <div class="card-body p-2">
         <RadzenChart>
@@ -16,7 +16,7 @@
             </RadzenLineSeries>
             @if (ValueOld.Any())
             {
-                <RadzenLineSeries Smooth=false Data="@ValueOld" CategoryProperty="Date" Title="@Name" LineType="LineType.Dashed" StrokeWidth="1" ValueProperty="Value" >
+                <RadzenLineSeries Smooth=false Data="@ValueOld" CategoryProperty="Date" Title="@Name" LineType="LineType.Dashed" StrokeWidth="1" ValueProperty="Value">
                     <RadzenMarkers MarkerType="MarkerType.None" />
                 </RadzenLineSeries>
             }
@@ -41,6 +41,11 @@
     [Parameter] public float LimitMax { get; set; } = 100;
     [Parameter] public string Name { get; set; } = "";
     [Parameter] public string Unit { get; set; } = "";
+
+    private float? Average = null;
+    private float? AverageOld = null;
+    private string Title = "";
+
     [Parameter]
     public DataGraph ValueShown
     {
@@ -59,10 +64,22 @@
             }
             double hours = Value.Any() ? (Value.Last().Date - Value.First().Date).TotalHours : 24;
 
+            Average = Value.Any() ? Value.Select(x => x.Value).Average() : null;
+            AverageOld = ValueOld.Any() ? ValueOld.Select(x => x.Value).Average() : null;
+
             if (hours < 24)
                 AxisXFormat = "{0:HH:mm}";
             else
                 AxisXFormat = "{0:dd MMM HH:mm}";
+
+            if (Average == null && AverageOld == null)
+                Title = $"{Name}";
+            else if (Average != null && AverageOld == null)
+                Title = $"{Name} (Avg: {Average:N1} [{Unit}])";
+            else if (Average == null && AverageOld != null)
+                Title = $"{Name} (Avg: {AverageOld:N1} [{Unit}])";
+            else
+                Title = $"{Name} (Avg: {Average:N1} [{Unit}] / Avg: {AverageOld:N1} [{Unit}])";
         }
     }
 
