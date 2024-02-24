@@ -1,0 +1,18 @@
+﻿@page "/timestamp"
+
+<PageTitle>Timestamp</PageTitle>
+<h3>Timestamp</h3>
+
+<RadzenTextBox @bind-Value=@curNewConfig /> <RadzenButton Text="Add" Click="AddConf" />
+<br />
+@foreach(var item in conf)
+{
+	<RadzenButton Text=@item Click=@(() => AddTimestamp(item)) />
+}
+<br />
+@foreach(var logItem in _log.OrderByDescending(x => x))
+{
+	<div>
+		@logItem
+	</div>
+}
